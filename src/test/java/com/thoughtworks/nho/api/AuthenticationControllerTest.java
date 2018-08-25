@@ -47,4 +47,16 @@ class AuthenticationControllerTest extends BaseControllerTest {
                 .andExpect(status().isUnauthorized());
     }
 
+    @Test
+    void should_regist_successfully() throws Exception {
+        LoginRequestUser loginRequestBody = LoginRequestUser.builder()
+                .username("newUser").password("123").build();
+
+        mockMvc.perform(post("/api/authentication/regist")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(loginRequestBody)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.username").value("newUser"));
+    }
+
 }
