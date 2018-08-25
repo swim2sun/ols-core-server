@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/authentication")
@@ -30,7 +31,7 @@ public class AuthenticationController {
 
     @PostMapping("/regist")
     @ResponseStatus(HttpStatus.OK)
-    public JWTUser regist(@RequestBody LoginRequestUser loginRequestUser, HttpServletResponse response) {
+    public JWTUser regist(@RequestBody @Valid LoginRequestUser loginRequestUser, HttpServletResponse response) {
         User user = User.builder().name(loginRequestUser.getUsername()).password(loginRequestUser.getPassword()).build();
         userService.create(user);
         return authService.login(response, loginRequestUser);
