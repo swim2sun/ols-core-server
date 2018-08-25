@@ -16,5 +16,6 @@ public class LoginRequestUser {
     @Pattern(regexp = "[a-zA-Z0-9@]+", message = "user")
     @Length(max = 20)
     private String username;
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "user")
     private String password;
 }

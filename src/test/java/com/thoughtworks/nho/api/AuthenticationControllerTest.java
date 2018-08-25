@@ -97,5 +97,15 @@ class AuthenticationControllerTest extends BaseControllerTest {
                 .andExpect(status().is4xxClientError());
     }
 
+    @Test
+    void should_register_failed_when_password_contains_special_character() throws Exception {
+        LoginRequestUser loginRequestBody = LoginRequestUser.builder()
+                .username("newUser").password("123*").build();
+
+        mockMvc.perform(post("/api/authentication/regist")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(loginRequestBody)))
+                .andExpect(status().is4xxClientError());
+    }
 
 }
