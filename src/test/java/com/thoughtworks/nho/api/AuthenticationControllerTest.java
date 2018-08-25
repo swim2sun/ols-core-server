@@ -86,4 +86,16 @@ class AuthenticationControllerTest extends BaseControllerTest {
                 .andExpect(status().is4xxClientError());
     }
 
+    @Test
+    void should_register_failed_when_username_is_used() throws Exception {
+        LoginRequestUser loginRequestBody = LoginRequestUser.builder()
+                .username("testUser").password("123").build();
+
+        mockMvc.perform(post("/api/authentication/regist")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(loginRequestBody)))
+                .andExpect(status().is4xxClientError());
+    }
+
+
 }

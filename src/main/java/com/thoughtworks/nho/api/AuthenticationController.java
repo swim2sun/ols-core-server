@@ -3,6 +3,7 @@ package com.thoughtworks.nho.api;
 import com.thoughtworks.nho.cofiguration.security.JWTUser;
 import com.thoughtworks.nho.cofiguration.security.LoginRequestUser;
 import com.thoughtworks.nho.domain.User;
+import com.thoughtworks.nho.exception.UserExistedException;
 import com.thoughtworks.nho.service.AuthService;
 import com.thoughtworks.nho.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

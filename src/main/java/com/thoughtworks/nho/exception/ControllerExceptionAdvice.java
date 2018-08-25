@@ -26,4 +26,10 @@ public class ControllerExceptionAdvice {
         log.error(exception.getMessage());
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({UserExistedException.class})
+    public String handleUserExistedException(UserExistedException exception) {
+        return exception.getMessage();
+    }
+
 }
