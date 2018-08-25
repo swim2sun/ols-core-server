@@ -108,4 +108,17 @@ class AuthenticationControllerTest extends BaseControllerTest {
                 .andExpect(status().is4xxClientError());
     }
 
+    @Test
+    void should_register_failed_when_password_length_is_greater_then_20() throws Exception {
+        String password = "longLongLongLongLongLongLongPassword";
+        assertThat(password.length()).isGreaterThan(20);
+        LoginRequestUser loginRequestBody = LoginRequestUser.builder()
+                .username("newUser").password(password).build();
+
+        mockMvc.perform(post("/api/authentication/regist")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(loginRequestBody)))
+                .andExpect(status().is4xxClientError());
+    }
+
 }
