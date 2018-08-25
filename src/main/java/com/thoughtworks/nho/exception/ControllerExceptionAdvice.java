@@ -1,6 +1,8 @@
 package com.thoughtworks.nho.exception;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -16,20 +18,27 @@ public class ControllerExceptionAdvice {
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler({SQLException.class, InvalidCredentialException.class})
-    public String handleSQLException(InvalidCredentialException exception) {
-        return exception.getMessage();
+    public ExceptionResp handleSQLException(InvalidCredentialException exception) {
+        return ExceptionResp.of(exception.getMessage());
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler({BadCredentialsException.class})
-    public void handleBadCredentialsException(BadCredentialsException exception) {
-        log.error(exception.getMessage());
+    public ExceptionResp handleBadCredentialsException(BadCredentialsException exception) {
+        String message = exception.getMessage();
+        log.error(message);
+        return ExceptionResp.of(message);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({UserExistedException.class})
-    public String handleUserExistedException(UserExistedException exception) {
-        return exception.getMessage();
+    public ExceptionResp handleUserExistedException(UserExistedException exception) {
+        return ExceptionResp.of(exception.getLocalizedMessage());
     }
 
+    @Data
+    @AllArgsConstructor(staticName = "of")
+    static class ExceptionResp {
+        private String message;
+    }
 }
